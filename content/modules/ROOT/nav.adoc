@@ -28,5 +28,6 @@
 * xref:module-06-observability.adoc[OpenShift Observability]
 ** xref:module-06-observability.adoc#admin-observability[Vue admin]
 ** xref:module-06-observability.adoc#user-observability[Vue utilisateur]
+** xref:module-06-observability.adoc#virt-observability[Vue dédiée Virtualization]
 
 * xref:conclusion.adoc[Conclusion]

@@ -11,21 +11,21 @@ Un *cluster admin* pourra par exemple voir plusieurs dizaine de dashboards afin 
 Un *utilisateur OpenShift* lui ne pourra qu'accéder à quelques métriques et dashboards liés aux projects dont il a accès.
 
 [[admin-observability]]
-== OpenShift Observability pour les administrateurs
+== OpenShift Observability pour les administrateurs.
 
 . Ensemble des dashboards disponibles pour un administrateur
 +
 image::2025_spring/module-06-observability/admin01.png[link=self, window=blank, width=75%]
 
-. Exemple du dashboard sur l'utilisation d'un cluster OpenShift
+. Exemple du dashboard sur l'utilisation d'un cluster OpenShift.
 +
 image::2025_spring/module-06-observability/admin02.png[link=self, window=blank, width=75%]
 
-. Focus sur un noeud physique en particulier
+. Focus sur un noeud physique en particulier.
 +
 image::2025_spring/module-06-observability/admin03.png[link=self, window=blank, width=75%]
 
-. La consommation électrique est également disponible
+. La consommation électrique est également disponible.
 +
 image::2025_spring/module-06-observability/admin04.png[link=self, window=blank, width=75%]
 
@@ -33,19 +33,28 @@ image::2025_spring/module-06-observability/admin04.png[link=self, window=blank, 
 [[user-observability]]
 == OpenShift Observability pour les utilisateurs
 
-. Ensemble des dashboards disponibles pour un utilisateur
+. Accéder à la partie Observability.
 +
-image::2025_spring/module-06-observability/admin01.png[link=self, window=blank, width=75%]
+image::2025_spring/module-06-observability/user01.png[link=self, window=blank, width=75%]
 
-. Exemple du dashboard sur l'utilisation d'un cluster OpenShift
+. Ressources utilisées dans votre project.
 +
-image::2025_spring/module-06-observability/admin02.png[link=self, window=blank, width=75%]
+image::2025_spring/module-06-observability/user02.png[link=self, window=blank, width=75%]
 
-. Focus sur un noeud physique en particulier
+. Focus sur une VM de votre project
 +
-image::2025_spring/module-06-observability/admin03.png[link=self, window=blank, width=75%]
+image::2025_spring/module-06-observability/user03.png[link=self, window=blank, width=75%]
 
-. La consommation électrique est également disponible
+
+[[virt-observability]]
+== L'Observability pour OpenShift Virtualization
+
+En plus de la stack par default présente dans OpenShift, OpenShift Virtualization ajoute une vue spécifique à OpenShift Virtualization directement accessbile au niveau de chaque projet et VM.
+
+. Métrique OpenShift Virtualization au niveau d'un projet
 +
-image::2025_spring/module-06-observability/admin04.png[link=self, window=blank, width=75%]
+image::2025_spring/module-06-observability/vm01.png[link=self, window=blank, width=75%]
 
+. Métrique OpenShift Virtualization au niveau d'une VM
++
+image::2025_spring/module-06-observability/vm02.png[link=self, window=blank, width=75%]
