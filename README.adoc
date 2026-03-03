@@ -28,6 +28,49 @@ In this event we will explore many common management activities that virtual adm
 6. Créer les namespace project-1 to 20 with associated role
 7. Ajouter le role kubevirt.io:migrate aux utilisateurs
 
+== Create new role
+
+----
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'kubevirt.io:dm'
+rules:
+  - verbs:
+      - get
+      - delete
+      - create
+      - update
+      - patch
+      - list
+      - watch
+      - deletecollection
+    apiGroups:
+      - subresources.kubevirt.io
+    resources:
+      - virtualmachines/migrate
+      - virtualmachines/pause
+      - virtualmachines/unpause
+      - virtualmachines/freeze
+      - virtualmachines/unfreeze
+      - virtualmachines/softreboot
+      - virtualmachines/reset
+  - verbs:
+      - get
+      - delete
+      - create
+      - update
+      - patch
+      - list
+      - watch
+      - deletecollection
+    apiGroups:
+      - kubevirt.io
+    resources:
+      - virtualmachineinstancemigrations
+----
+
+
 == Delete unnecessary namespace
 
 ----
@@ -50,10 +93,13 @@ oc new-project project-$i
 oc new-project udn-projet-$i
 oc adm policy add-role-to-user admin user$i -n project-$i
 oc adm policy add-role-to-user admin user$i -n udn-projet-$i
-oc adm policy add-role-to-user kubevirt.io:migrate user$i -n project-$i
-oc adm policy add-role-to-user kubevirt.io:migrate -n udn-projet-$i
+oc adm policy add-role-to-user admin user$i -n openshift
+oc adm policy add-role-to-user kubevirt.io:dm user$i -n project-$i
+oc adm policy add-role-to-user edit user$i -n openshift-migration
 done
 ----
+
+
 
 
 == Version Information

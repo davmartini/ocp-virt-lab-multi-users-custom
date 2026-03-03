@@ -190,6 +190,11 @@ image::2025_spring/module-01-intro/34_Migration_Overview.png[link=self, window=b
 
 Dans cette section, nous allons migrer le disque d'une VM d'une class de stockage à une autre sans arrêter la VM. Une class de stockage peut correspondre à un type de stockage ou a une QoS particulière ou simplement à un founisseur de stockage particulier.
 
+. Sélectionnez votre VM et allez dans le menu *Actions* -> *Migration* -> *Storage*.
++
+image::2025_spring/module-01-intro/35_Migration_Storage.png[link=self, window=blank, width=100%]
+
+
 
 
 == Conclusion
