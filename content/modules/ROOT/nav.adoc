@@ -7,6 +7,7 @@
 ** xref:module-01.adoc#admin_vms[Administration des VMs]
 ** xref:module-01.adoc#vm_state[Contrôler l'état d'une VM]
 ** xref:module-01.adoc#live_migrate[Effectuer une live migration]
+** xref:module-01.adoc#storage_live_migrate[Effectuer un Storage live migration][[]]
 
 * xref:module-02-tempinst.adoc[Gestion des Templates]
 ** xref:module-02-tempinst.adoc#clone_customize_template[Cloner et Personnaliser un Template]
