@@ -22,8 +22,9 @@ Vous trouverez sur ce link:10th_March_Virtualization_HandsOn_Workshop_Tech_Journ
 
 == Accès au Cluster
 
-Votre environnement d'atelier se trouve sur un cluster partagé.
-Les autres participants à cet atelier se trouvent également sur ce cluster, vous avez donc un accès limité aux coulisses d'OpenShift.
+Votre environnement d'atelier se trouve sur un cluster partagé. 
+Vous serez un utilisateur OpenShift et non un administrateur d'un cluster OpenShift. La vue sera donc limitée à votre projet/namespace et toute la partie infrastructure (tel que le noeud où tourne vos VMs) vous sera masquée.
+Les autres participants à cet atelier se trouvent également sur ce cluster.
 Lorsque des fonctionnalités importantes d'OpenShift ne sont pas visibles pour les utilisateurs, ce guide vous fournira des explications et des captures d'écran des parties concernées.
 Ce contrôle d'accès strict des utilisateurs met en évidence la puissante multi-tenancy d'OpenShift.
 De nombreux projets peuvent être exploités sur un seul cluster OpenShift sans interférer les uns avec les autres.
