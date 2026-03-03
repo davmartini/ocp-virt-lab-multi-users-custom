@@ -2,11 +2,14 @@
 
 == Introduction
 
-Bienvenue à l'atelier *OpenShift Virtualization* du *Connect Tech Day Red Hat* ! 
+Bienvenue à cet atelier pratique autour d'*OpenShift Virtualization* ! 
 
-Durant cet atelier, nous explorerons en profondeur les capacités de personnalisation avancées des VM sur la plateforme OpenShift. 
+Cet atelier a une durée de 1h30 mais vous pourrez toujours y avoir accès jusqu'à 16h.
 
-L'objectif est de dépasser les déploiements standards pour intégrer pleinement vos VM dans un environnement d'entreprise complexes.
+== Disclamer
+
+Les environnements pour ces labs sont des environnements générés à la demande et ne sont pas représentatifs de la réalité. En effet, pour des questions de coûts et d'automatisation, ces environnements OpenShift Virtualization sont de type "nested" et non supportés en production. Les performances peut donc être très largement affectées. 
+
 
 .Nous verrons notamment comment :
 * Créer des templates personnalisés pour standardiser et accélérer le déploiement de vos VM.
