@@ -194,6 +194,25 @@ Dans cette section, nous allons migrer le disque d'une VM d'une class de stockag
 +
 image::2025_spring/module-01-intro/35_Migration_Storage.png[link=self, window=blank, width=100%]
 
+. Vous pouvez choisir de migrer l'ensemble des disques d'une VM ou un seul disque en particulier.
++
+image::2025_spring/module-01-intro/36_Migration_Storage.png[link=self, window=blank, width=100%]
+
+. Vous devez choisir vers quelle classe de stockage vous souhaitez migrer votre disque.
++
+image::2025_spring/module-01-intro/37_Migration_Storage.png[link=self, window=blank, width=100%]
+
+. Une fois que vous avez fait votre choix, vous pouvez lancer la migration.
++
+image::2025_spring/module-01-intro/38_Migration_Storage.png[link=self, window=blank, width=100%]
+
+. Une fois lancée, vous pouvez suivre la migration si vous le souhaitez.
++
+image::2025_spring/module-01-intro/39_Migration_Storage.png[link=self, window=blank, width=100%]
++
+image::2025_spring/module-01-intro/40_Migration_Storage.png[link=self, window=blank, width=100%]
++
+image::2025_spring/module-01-intro/41_Migration_Storage.png[link=self, window=blank, width=100%]
 
 
 
