@@ -8,7 +8,7 @@ Cet atelier a une durée de 1h30 mais vous pourrez toujours y avoir accès jusqu
 
 .Nous verrons notamment comment :
 * Créer des templates personnalisés pour standardiser et accélérer le déploiement de vos VM.
-* Connecter nos machines virtuelles à notre réseau d'entreprise.
+* Connecter nos machines virtuelles à un réseau d'entreprise de type VLAN.
 * Mettre en place une bulle réseau UDN pour la communication de vos VMs.
 // * Créer une stratégie robuste de sauvegarde et de restauration pour vos machines virtuelles en intégrant la solution Veeam Kasten.
 
