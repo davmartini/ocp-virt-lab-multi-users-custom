@@ -6,16 +6,19 @@ Bienvenue à cet atelier pratique autour d'*OpenShift Virtualization* !
 
 Cet atelier a une durée de 1h30 mais vous pourrez toujours y avoir accès jusqu'à 16h.
 
-== Disclamer
-
-Les environnements pour ces labs sont des environnements générés à la demande et ne sont pas représentatifs de la réalité. En effet, pour des questions de coûts et d'automatisation, ces environnements OpenShift Virtualization sont de type "nested" et non supportés en production. Les performances peut donc être très largement affectées. 
-
-
 .Nous verrons notamment comment :
 * Créer des templates personnalisés pour standardiser et accélérer le déploiement de vos VM.
 * Connecter nos machines virtuelles à notre réseau d'entreprise.
 * Mettre en place une bulle réseau UDN pour la communication de vos VMs.
 * Créer une stratégie robuste de sauvegarde et de restauration pour vos machines virtuelles en intégrant la solution Veeam Kasten.
+
+== Disclamer
+
+Les environnements pour ces labs sont des environnements générés à la demande et ne sont pas représentatifs de la réalité. En effet, pour des questions de coûts et d'automatisation, ces environnements OpenShift Virtualization sont de type "nested" et non supportés en production. Les performances peut donc être très largement affectées. 
+
+== Document
+
+Vous trouverez sur ce link:content/modules/ROOT/assets/docs/10th_March_Virtualization_HandsOn_Workshop_Tech_Journey_Virtualization.pdf[Download the RAML example], le document présenté en début de session.
 
 == Accès au Cluster
 
