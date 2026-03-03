@@ -25,4 +25,7 @@
 ** xref:module-04-UDN.adoc#vm-create[Créer des VMs reliées a l'UDN]
 ** xref:module-04-UDN.adoc#np-create[Network Policies]
 
+* xref:module-06-observability.adoc[OpenShift Observability]
+
+
 * xref:conclusion.adoc[Conclusion]
