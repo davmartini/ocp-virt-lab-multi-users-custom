@@ -23,7 +23,7 @@ In this event we will explore many common management activities that virtual adm
 1. Upgrade cluster to 4.19
 2. Upgrade cluster to 4.20
 3. Upgrade all operators
-4. Install Veeam Kasten Operator
+4. Define ocs-external-storagecluster-ceph-rbd-immediate StorageClass as default
 5. Delete unnecessary namespace
 6. Créer les namespace project-1 to 20 with associated role
 7. Ajouter le role kubevirt.io:migrate aux utilisateurs
