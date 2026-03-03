@@ -21,23 +21,23 @@ image::2025_spring/module-09-networking/39.png[link=self, window=blank, width=75
 La création d'un UDN ne se fait pas via une `NetworkAttachmentDefinition` (NAD), mais via la creation d'un objet `UserDefinedNetwork` qui définit le réseau L2 lui-même.
 
 Pour cet exercice, **un namespace lié à un UDN a été créé pour chaque participant.**
-Observons maintenant les caractéristique de votre UDN.
+Nous allons commencer par créer notre UDN dans ce namespace/project dédié.
 
 . Dans le menu de navigation de gauche, cliquez sur *Networking* -> *UserDefinedNetworks*
 +
-image::2025_spring/module-09-networking/40.png[link=self, window=blank, width=40%]
+image::2025_spring/module-09-networking/udn01.png[link=self, window=blank, width=40%]
 +
-. Dans la liste déroulante *Project* en haut, sélectionnez le projext *udn-project-X*
+. Cliquez ensuite sur *Create* et *UserDefinedNetwork*
 +
-image::2025_spring/module-09-networking/41.png[link=self, window=blank, width=40%]
+image::2025_spring/module-09-networking/udn02.png[link=self, window=blank, width=40%]
 +
-. Cliquez sur l'UDN correspondant à votre user-project-X afin d'en examiner les caractéristiques
+. Choisissez ensuite votre projet et le CIDR de votre choix.
 +
-image::2025_spring/module-09-networking/42.png[link=self, window=blank, width=70%]
+image::2025_spring/module-09-networking/udn03.png[link=self, window=blank, width=70%]
 +
 . Examinon maintenant notre UDN
 +
-image::2025_spring/module-09-networking/43.png[link=self, window=blank, width=80%]
+image::2025_spring/module-09-networking/udn04.png[link=self, window=blank, width=80%]
 +
 
 . Nous pouvons notamment observer :
