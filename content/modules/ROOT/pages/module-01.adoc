@@ -149,9 +149,10 @@ image::2025_spring/module-01-intro/27_VM_Actions_Paused.png[link=self, window=bl
 . Sortez la Machine Virtuelle de pause en utilisant le menu *Actions* et l'option *Unpause*, ou en utilisant le bouton de raccourci.
 
 [[live_migrate]]
-== Effectuer une Live Migration
+== Effectuer une VM Live Migration
 
 Dans cette section, nous allons migrer la VM d'un *node* OpenShift à un autre sans arrêter la VM. La *Live migration* (migration à chaud) nécessite un stockage *ReadWriteMany* (RWX) pour que les disques de la VM puissent être montés à la fois sur les *nodes* source et de destination en même temps. *OpenShift Virtualization*, contrairement à d'autres solutions de virtualisation que vous connaissez peut-être, n'utilise pas de *datastores* monolithiques montés sur chaque membre du cluster qui contiennent de nombreux disques de VM pour de nombreuses VMs différentes. Au lieu de cela, chaque disque de VM est stocké dans son propre volume qui n'est monté que quand et où il est nécessaire.
+Étant simple utilisateur OpenShift, vous ne verez pas simplement le noeud sous jacent hébergent votre VM. OpenShift étant une technologie cloud, l'infrastructure doit être transparente pour un utilisateur final. 
 
 . Pour voir le *node* physique sur lequel la machine virtuelle s'exécute, cliquez sur le nom du *Pod* _virt-launcher-fedora01-uuid_ qui se trouve sous la tuile *General* sur la page *Overview*.
 +
@@ -178,6 +179,13 @@ image::2025_spring/module-01-intro/32_Migrated_Status.png[link=self, window=blan
 . Nous pouvons maintenant voir que la machine virtuelle se trouve sur un nouveau *node*, dans l'image _worker-cluster-ttgmt-2_, et que le *pod* lui-même réside maintenant dans un nouveau *pod* avec un nouvel ID unique, car le processus de *live migration* transfère l'instance de VM vers un nouveau *pod* sur un nouveau *worker node* sans interruption.
 +
 image::2025_spring/module-01-intro/33_Pod_Details_Node_Migrated.png[link=self, window=blank, width=100%]
+
+[[storage_live_migrate]]
+== Effectuer un Storage Live Migration
+
+Dans cette section, nous allons migrer le disque d'une VM d'une class de stockage à une autre sans arrêter la VM. Une class de stockage peut correspondre à un type de stockage ou a une QoS particulière ou simplement à un founisseur de stockage particulier.
+
+
 
 == Conclusion
 
