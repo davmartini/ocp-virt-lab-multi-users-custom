@@ -24,6 +24,32 @@ In this event we will explore many common management activities that virtual adm
 2. Upgrade cluster to 4.20
 3. Upgrade all operators
 4. Install Veeam Kasten Operator
+5. Créer les namespace project-1 to 20 with associated role
+
+== Create namespace
+
+----
+for i in {1..20}
+do 
+oc new-project project-$i
+oc new-project udn-projet-$i
+oc adm policy add-cluster-role-to-user admin user$i -n project-$i
+oc adm policy add-cluster-role-to-user admin user$i -n udn-projet-$i
+done
+----
+
+== Delete unnecessary namespace
+
+----
+for i in {1..20}
+do 
+oc delete namespace mtv-user$i
+oc delete namespace oadp-user$i
+oc delete namespace vmimported-user$i
+oc delete namespace vmexamples-user$i-udn
+done
+----
+
 
 == Version Information
 
