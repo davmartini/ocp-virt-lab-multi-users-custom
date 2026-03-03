@@ -26,7 +26,7 @@ In this event we will explore many common management activities that virtual adm
 4. Install Veeam Kasten Operator
 5. Delete unnecessary namespace
 6. Créer les namespace project-1 to 20 with associated role
-
+7. Ajouter le role kubevirt.io:migrate aux utilisateurs
 
 == Delete unnecessary namespace
 
@@ -50,6 +50,8 @@ oc new-project project-$i
 oc new-project udn-projet-$i
 oc adm policy add-role-to-user admin user$i -n project-$i
 oc adm policy add-role-to-user admin user$i -n udn-projet-$i
+oc adm policy add-role-to-user kubevirt.io:migrate user$i -n project-$i
+oc adm policy add-role-to-user kubevirt.io:migrate -n udn-projet-$i
 done
 ----
 
