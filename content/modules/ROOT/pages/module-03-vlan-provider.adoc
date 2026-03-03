@@ -66,13 +66,13 @@ Nous vous avons donné les droits pour que vous puissiez inspecter la configurat
 
 . Pour cela, il vous suffit d'aller dans le menu à gauche *Networking* -> *Node Network Configuration*.
 +
-image::2025_spring/module-09-networking/ncc01.png[link=self, window=blank, width=75%]
+image::2025_spring/module-09-networking/nnc01.png[link=self, window=blank, width=75%]
 
 . Vous pourrez voir en temps réel l'ensemble des noeuds physiques sur lesquels vous pouvez zoomer ou bouger les objets simplement.
 +
-image::2025_spring/module-09-networking/ncc02.png[link=self, window=blank, width=75%]
+image::2025_spring/module-09-networking/nnc02.png[link=self, window=blank, width=75%]
 +
-image::2025_spring/module-09-networking/ncc03.png[link=self, window=blank, width=75%]
+image::2025_spring/module-09-networking/nnc03.png[link=self, window=blank, width=75%]
 
 Maintenant que nous avons confirmé que la configuration réseau est en place sur les nœuds, nous pouvons créer des VMs qui l'*utilisent*.
 
