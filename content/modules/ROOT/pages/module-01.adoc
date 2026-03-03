@@ -180,6 +180,11 @@ image::2025_spring/module-01-intro/32_Migrated_Status.png[link=self, window=blan
 +
 image::2025_spring/module-01-intro/33_Pod_Details_Node_Migrated.png[link=self, window=blank, width=100%]
 
+. Vous pouvez également voir l'ensemble des migrations de vos projects en allant dans le menu à gauche *Virtualization* -> *Overview* puis dans l'onglet *Migration*.
++
+image::2025_spring/module-01-intro/34_Migration_Overview.png[link=self, window=blank, width=100%]
+
+
 [[storage_live_migrate]]
 == Effectuer un Storage Live Migration
 
