@@ -40,14 +40,6 @@ image::2025_spring/module-07-tempinst/03_Create_Custom_Template.png[link=self, w
 +
 image::2025_spring/module-07-tempinst/04_Clone_Template_Options.png[link=self, window=blank, width=100%]
 
-. Cela vous amènera à la page *Details* du *template* où nous pourrons personnaliser certaines options. Commencez par trouver le CPU et la Mémoire près du bas de la page, et cliquez sur l'icône en forme de crayon pour les modifier.
-+
-image::2025_spring/module-07-tempinst/05_Clone_Details.png[link=self, window=blank, width=100%]
-
-. Une nouvelle fenêtre apparaîtra où vous pourrez modifier la quantité de CPU et de Mémoire. Pour notre *template* personnalisé, réglez la valeur des CPUs à 2, et la Mémoire à 4 GiB, puis cliquez sur le bouton *Save*.
-+
-image::2025_spring/module-07-tempinst/06_Edit_CPU_Mem.png[link=self, window=blank, width=100%]
-
 . Ensuite, cliquez sur l'onglet *Scripts* en haut, et dans la section appelée *Cloud-init*, cliquez sur le bouton *Edit*.
 +
 image::2025_spring/module-07-tempinst/09_Scripts_CloudInit.png[link=self, window=blank, width=100%]
