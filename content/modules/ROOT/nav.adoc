@@ -1,0 +1,29 @@
+* xref:index.adoc[Introduction ]
+
+* xref:module-01.adoc[Gestion d'une Machine Virtuelle]
+** xref:module-01.adoc#virt_persona[Passer en vue virtualization]
+** xref:module-01.adoc#create_project[Créer un nouveau project]
+** xref:module-01.adoc#create_vm[Créer une VM linux]
+** xref:module-01.adoc#admin_vms[Administration des VMs]
+** xref:module-01.adoc#vm_state[Contrôler l'état d'une VM]
+** xref:module-01.adoc#live_migrate[Effectuer une live migration]
+
+* xref:module-02-tempinst.adoc[Gestion des Templates]
+** xref:module-02-tempinst.adoc#clone_customize_template[Cloner et Personnaliser un Template]
+** xref:module-02-tempinst.adoc#create_win[Créer un Template de VM Windows]
+** xref:module-02-tempinst.adoc#instance_types[Introduction aux Instance Types]
+
+* xref:module-03-vlan-provider.adoc[Connecter un réseau externe]
+** xref:module-03-vlan-provider.adoc#NNCP[Configuration Réseau des Nœuds]
+** xref:module-03-vlan-provider.adoc#nad-create[Network Attachment Definition]
+** xref:module-03-vlan-provider.adoc#vm-create[Créer des VMs reliées au Bridge]
+** xref:module-03-vlan-provider.adoc#vm-migration-test[Persistance IP]
+
+* xref:module-04-UDN.adoc[UDN & Microsegmentation]
+** xref:module-04-UDN.adoc#udn-create[Création d'un UDN]
+** xref:module-04-UDN.adoc#vm-create[Créer des VMs reliées a l'UDN]
+** xref:module-04-UDN.adoc#np-create[Network Policies]
+
+* xref:module-07-veeam.adoc[Backup restore avec Veeam Kasten]
+
+* xref:conclusion.adoc[Conclusion]

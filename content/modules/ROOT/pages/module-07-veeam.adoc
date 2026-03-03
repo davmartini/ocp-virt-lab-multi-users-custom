@@ -1,0 +1,188 @@
+= Sauvegarde et Restauration de VM avec Veeam Kasten
+
+== Introduction
+
+Dans un environnement de production, la capacité à sauvegarder et restaurer rapidement des machines virtuelles est cruciale. OpenShift Virtualization, étant *cloud-native*, s'intègre avec des solutions de protection de données modernes comme *Veeam Kasten K10*.
+
+Kasten traite les applications, y compris les VM, comme une unité atomique, sauvegardant non seulement les disques (PVCs) mais aussi la configuration (les objets Kubernetes/OpenShift qui définissent la VM).
+
+. Dans ce module, nous allons :
+* Créer une VM de test et y ajouter un fichier.
+* Sauvegarder cette VM à l'aide d'une politique Kasten.
+* Simuler un sinistre en supprimant la VM.
+* Restaurer la VM à partir de la sauvegarde.
+* Vérifier que la VM est revenue à son état précédent, y compris le fichier de test.
+
+image::module-01-install/00.png[]
+
+== Préparation de la Machine Virtuelle de Test
+
+Pour tester le cycle de vie de la sauvegarde et de la restauration, nous avons besoin d'une VM avec un état spécifique (un fichier de test).
+
+. Naviguez vers la vue *Virtualization*. Assurez-vous d'être dans votre *project* (`projet-X`).
+
+. Cliquez sur *Create VirtualMachine* et sélectionnez *From template*.
+
+. Sélectionnez le *template* *Fedora VM*.
++
+image::2025_spring/kasten/1.png[link=self, window=blank, width=100%]
+
+. Changez le nom en **fedora-kasten-test** et cliquez sur *Quick create VirtualMachine*.
+
+. Attendez que la VM passe au statut *Running*.
+
+. Sélectionnez la VM *fedora-kasten-test* et cliquez sur l'onglet *Console*.
+
+. Connectez-vous à la VM en utilisant les *Guest login credentials* fournis.
+
+. Une fois connecté, créez un fichier de test vide à la racine du répertoire personnel de l'utilisateur.
++
+[source,sh,role=execute]
+----
+touch test.txt
+----
+
+. Vérifiez que le fichier existe bien en listant le contenu du répertoire.
++
+[source,sh,role=execute]
+----
+ls
+----
++
+Vous devriez voir `test.txt` apparaître dans la liste. Laissez cette VM en cours d'exécution.
++
+image::2025_spring/kasten/2.png[link=self, window=blank, width=100%]
+
+== Accès à la Console Kasten K10
+
+La console Kasten est l'interface web où nous gérerons les politiques de sauvegarde et les actions de restauration.
+
+. Dans la console OpenShift, passez à la vue *Administrator*.
+
+. Dans le menu de gauche, naviguez vers *Networking* -> *Routes*.
+
+. Assurez-vous que le *Project* sélectionné est **kasten-io** (ou le projet où Kasten est installé dans votre lab).
+
+. Vous devriez voir une route nommée *k10-route*. Cliquez sur l'URL dans la colonne *Location*.
++
+image::2025_spring/kasten/3.png[link=self, window=blank, width=100%]
+
+. Une nouvelle fenêtre s'ouvrira avec le tableau de bord Kasten K10. Vous pouvez désormais vous identifier avec vos logins OpenShift.
++
+image::2025_spring/kasten/4.png[link=self, window=blank, width=50%]
+
+. Si nécessaire, autorisez l’accès à Kasten à votre nom d'utilisateur
++
+image::2025_spring/kasten/9.png[link=self, window=blank, width=100%]
+
+== Création et Exécution d'une Politique de Sauvegarde
+Nous avons maintenant accès à la console Veeam Kasten.
+
+Nous allons maintenant créer une Policy qui dit à Kasten quoi sauvegarder et comment.
+
+. Commençons par cliquer sur la tuile *application* dans le dashboard 
++
+image::2025_spring/kasten/5.png[link=self, window=blank, width=100%]
+
+
+. Dans le tableau de bord sélectionnez le menu à trois points de notre *projet-X* et cliquez sur *Create a policy*
++
+image::2025_spring/kasten/6.png[link=self, window=blank, width=100%]
+
+. Remplissez le formulaire pour notre politique de sauvegarde :
+    * *Name:* Nous pouvons le laisser par default
+    * *Backup Frequency:* *Daily*
+    * Sélectionnez *Enable Backups via Snapshot Exports* et sélectionnez le stockage *s3-odf*
+    * Laissez les autres options par défaut et cliquez sur *Submit*
++
+image::2025_spring/kasten/10.png[link=self, window=blank, width=70%]
+
+. Cliquez sur *Create Policy*.
+
+. La politique est maintenant créée, mais elle n'a pas encore été exécutée. Sur la ligne de votre nouvelle politique (`projet-x-backup`), cliquez sur l'icône à droite puis sur *Run Once*.
++
+image::2025_spring/kasten/11.png[link=self, window=blank, width=100%]
+
+. Confirmez en cliquant sur *Yes, continue* dans la fenêtre contextuelle.
+
+. Cliquez sur *Dashboard* dans le menu principal de Kasten. Vous verrez un job de sauvegarde en cours (*Running*). Attendez quelques instants jusqu'à ce que le statut du job passe à *Succeeded*.
++
+image::2025_spring/kasten/12.png[link=self, window=blank, width=100%]
+
+. Notre VM est maintenant sauvegardée.
+
+== Simulation d'un Sinistre (Suppression de la VM)
+
+Il est temps de simuler une suppression accidentelle de notre machine virtuelle.
+
+. Retournez à la console OpenShift et à la vue *Virtualization*.
+
+. Assurez-vous d'être dans votre *project* (`projet-X`).
+
+. Sélectionnez la VM *fedora-kasten-test*.
+
+. Cliquez sur le menu *Actions* (dans le coin supérieur droit) et sélectionnez *Stop*, puis *Delete*.
++
+image::2025_spring/kasten/13.png[link=self, window=blank, width=100%]
+
+. Attendez que la VM disparaisse de la liste. Notre VM et son fichier `test.txt` ont disparu.
+
+== Restauration de la Machine Virtuelle
+
+Utilisons maintenant Kasten pour restaurer notre VM à partir du point de sauvegarde.
+
+. Retournez au tableau de bord Kasten K10.
+
+. Cliquez sur *Restore Points* dans le menu. Vous devriez toujours voir votre *projet* dans la liste.
+
+. Cliquez sur le nom de votre *projet*.
+
+. Vous verrez une liste de *Restore Points*. Localisez le point de restauration valide que nous avons créé à l'étape précédente.
++
+image::2025_spring/kasten/15.png[link=self, window=blank, width=100%]
+
+. Cliquez sur l'icône *Restore* sur la même ligne que ce point de restauration.
+
+. Une fenêtre *Restore Application* s'ouvrira. Nous voulons restaurer tout à son état d'origine. Laissez toutes les options par défaut et cliquez sur le bouton *Restore*.
+
+. Vous serez redirigé vers le *Dashboard* où vous pourrez suivre le statut du job de restauration. Attendez que le job passe à *Succeeded*.
++
+image::2025_spring/kasten/16.png[link=self, window=blank, width=100%]
+
+== Vérification de la Restauration
+
+Vérifions si notre VM est revenue et, plus important encore, si son état (le fichier `test.txt`) a été restauré.
+
+. Retournez à la console OpenShift et à la vue *Virtualization*.
+
+. Dans votre *project-X*, vous devriez maintenant voir la VM *fedora-kasten-test* réapparaître. Attendez qu'elle atteigne le statut *Running*.
+
+. Cliquez sur la VM, puis sur l'onglet *Console*.
+
+. Connectez-vous à nouveau à la machine virtuelle (les identifiants devraient être les mêmes).
+
+. Une fois connecté, listez le contenu du répertoire personnel.
++
+[source,sh,role=execute]
+----
+ls
+----
++
+**Vous devriez voir le fichier `test.txt` !**
++
+image::2025_spring/kasten/14.png[link=self, window=blank, width=100%]
+
+. (Optionnel) Vous pouvez maintenant vous déconnecter de la console (Ctrl-D).
+
+== Cleanup
+
+Pour économiser les ressources, veuillez arrêter la VM que nous venons de restaurer.
+
+. Dans la vue *Virtualization*, sélectionnez la VM *fedora-kasten-test*.
+. Cliquez sur le bouton *Stop*.
+
+== Conclusion
+
+Félicitations ! Vous avez terminé le cycle complet de protection des données pour une machine virtuelle *cloud-native*.
+
+Nous avons démontré comment Veeam Kasten s'intègre à OpenShift Virtualization pour sauvegarder non seulement le disque d'une VM, mais aussi son état et sa configuration. Nous avons simulé un sinistre en supprimant la VM, puis nous l'avons restaurée avec succès à son état exact, y compris le fichier de test que nous avions créé. Cela montre la puissance de la gestion des applications *stateful* dans OpenShift.

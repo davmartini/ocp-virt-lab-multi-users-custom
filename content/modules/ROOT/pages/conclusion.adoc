@@ -1,0 +1,54 @@
+image::2025_spring/conclusion/00_Thank_You.png[link=self, window=blank, width=100%]
+
+Nous espérons que vous avez apprécié cette expérience pratique avec *OpenShift Virtualization* et que vous avez acquis un aperçu précieux de la manière dont cette puissante solution peut vous accompagner dans votre parcours de modernisation et de gestion des charges de travail dans le cloud.
+
+En tirant parti de *Red Hat OpenShift*, vous bénéficiez d'une plateforme puissante facilitant plus que jamais l'exécution de charges de travail conteneurisées et de machines virtuelles de manière évolutive, sécurisée et cloud-native.
+
+[[key_takeaways]]
+== Points Clés à Retenir
+
+* OpenShift Virtualization est une plateforme orientée solution, conçue pour vous aider à importer, exécuter et gérer les machines virtuelles existantes, tout en servant de passerelle vers la modernisation des applications cloud-natives.
+
+* Lorsqu'elle est déployée sur OpenShift, OpenShift Virtualization combine le meilleur des deux mondes : l'innovation cloud-native et la flexibilité d'exécuter des VM traditionnelles, sur une plateforme unifiée et cloud-native.
+
+* Cette technologie jette des bases solides pour exécuter les charges de travail traditionnelles de manière sécurisée et fiable, tout en vous dotant des outils et des compétences nécessaires pour créer des applications modernes sur une plateforme unifiée.
+
+[[additional_info]]
+== Informations Complémentaires
+
+=== Ebook Gratuit : 15 Raisons d'Adopter Red Hat OpenShift Virtualization
+
+* Découvrez comment l'infrastructure de virtualisation continue d'évoluer.
+* Explorez les options de migration pour vos machines virtuelles existantes.
+* Tirez parti d'un grand nombre d'avantages pour l'ensemble de votre organisation.
+* Apprenez à déployer une base cohérente pour l'innovation.
+* Découvrez comment démarrer grâce à des démonstrations gratuites ou une Évaluation de Migration de Virtualisation (Virtual Migration Assessment).
+
+Cliquez sur le lien https://www.redhat.com/en/resources/15-reasons-adopt-openshift-virtualization-ebook[ici^] ou scannez le code QR ci-dessous pour en savoir plus :
+
+image::2025_spring/conclusion/01_Ebook.png[link=self, window=blank, width=50%]
+
+=== Services de Formation Red Hat : DO317 Gestion des Machines Virtuelles avec Red Hat OpenShift Virtualization
+
+* Compétences requises pour créer, accéder et gérer des VM sur des clusters OpenShift.
+* Compétences requises pour contrôler l'utilisation et l'accès aux ressources CPU, mémoire, stockage et réseau depuis les VM en utilisant les mêmes fonctionnalités Kubernetes qui contrôlent également ces ressources pour les conteneurs.
+* Exemples d'architectures pour gérer la Haute Disponibilité (HA) des VM à l'aide des fonctionnalités Kubernetes standard et des extensions d'OpenShift Virtualization.
+* Stratégies pour connecter les VM sur OpenShift aux services du datacenter externes à leur cluster OpenShift, tels que le stockage et les bases de données.
+* Stratégies pour migrer des VM depuis des hyperviseurs compatibles vers OpenShift Virtualization à l'aide de l'opérateur Migration Toolkit for Virtualization.
+
+Cliquez sur le lien https://www.redhat.com/en/services/training/managing-virtual-machines-red-hat-openshift-virtualization-exam[ici^] ou scannez le code QR ci-dessous pour en savoir plus :
+
+
+image::2025_spring/conclusion/02_DO317_Training.png[link=self, window=blank, width=50%]
+
+=== Évaluation de Migration de Virtualisation (Virtualization Migration Assessment)
+
+* Un atelier interactif de deux semaines sur site et un rapport de suivi.
+* Des architectes Red Hat expérimentés animent une courte série d'ateliers sur site pour vous aider à développer votre parcours de migration.
+* Ils fournissent un examen approfondi de votre environnement de virtualisation et de ses intégrations actuelles, y compris : réseau, stockage, sécurité, sauvegarde et reprise après sinistre.
+* Vous recevez un rapport VMA (Virtualization Migration Assessment) avec une proposition sur mesure pour votre migration complète, incluant des recommandations de haut niveau et des considérations de conception.
+* Cela peut vous aider à comprendre où vous allez, comment vous y arriverez, combien de temps cela prendra et combien cela coûtera.
+
+Cliquez sur le lien https://www.redhat.com/en/resources/virtualization-migration-assessment-datasheet[ici^] ou scannez le code QR ci-dessous pour en savoir plus :
+
+image::2025_spring/conclusion/03_VMA_QR.png[link=self, window=blank, width=50%]

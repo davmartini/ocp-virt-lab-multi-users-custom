@@ -1,0 +1,226 @@
+[[udn-create]]
+= User-Defined Networks (UDN) : IP Persistantes et Micro-segmentation
+
+Avec les versions récentes d'OpenShift, une nouvelle fonctionnalité puissante est disponible : les **User-Defined Networks (UDN)**.
+
+Dans la section précédente, nous avons utilisé une `NetworkAttachmentDefinition` (NAD) pour nous connecter à un réseau d'entreprise externe (`corp-network`). Cela nous a permis de maintenir une adresse IP stable lors d'une migration à chaud (Live Migration), car l'IP était gérée par un DHCP externe.
+
+Les UDN permettent également de conserver une IP unique et persistante pour nos VMs, mais avec une approche différente : ils utilisent le **SDN (Software-Defined Network) d'OpenShift** lui-même, au lieu de dépendre d'un réseau physique externe.
+
+Un UDN crée un **réseau L2 à plat** qui s'exécute par-dessus l'overlay OpenShift. Il agit comme une "bulle réseau" dédiée pour un ensemble spécifique de VMs.
+
+.Les caractéristiques clés d'un UDN sont :
+* **Isolation des flux :** Par défaut, le trafic au sein d'un UDN est complètement isolé. Les ressources connectées à cet UDN ne peuvent communiquer qu'entre elles.
+* **IPAM intégré :** L'UDN gère son propre plan d'adressage IP (IPAM). Il distribue des adresses IP persistantes aux VMs, garantissant qu'une VM conservera la même adresse IP même après une migration ou un redémarrage.
+
+.Illustration du Pod Network et d'un UDN sur le réseau d'OpenShift
+image::2025_spring/module-09-networking/39.png[link=self, window=blank, width=75%]
+
+[[udn-create]]
+== Création d'un User-Defined Network (UDN)
+La création d'un UDN ne se fait pas via une `NetworkAttachmentDefinition` (NAD), mais via la creation d'un objet `UserDefinedNetwork` qui définit le réseau L2 lui-même.
+
+Pour cet exercice, **un namespace lié à un UDN a été créé pour chaque participant.**
+Observons maintenant les caractéristique de votre UDN.
+
+. Dans le menu de navigation de gauche, cliquez sur *Networking* -> *UserDefinedNetworks*
++
+image::2025_spring/module-09-networking/40.png[link=self, window=blank, width=40%]
++
+. Dans la liste déroulante *Project* en haut, sélectionnez le projext *udn-project-X*
++
+image::2025_spring/module-09-networking/41.png[link=self, window=blank, width=40%]
++
+. Cliquez sur l'UDN correspondant à votre user-project-X afin d'en examiner les caractéristiques
++
+image::2025_spring/module-09-networking/42.png[link=self, window=blank, width=70%]
++
+. Examinon maintenant notre UDN
++
+image::2025_spring/module-09-networking/43.png[link=self, window=blank, width=80%]
++
+
+. Nous pouvons notamment observer :
+    * Le nom de l'UDN
+    * Le Namespace où l'UDN va être l'utilisé
+    * La topologie définit : L2 à plat (un simple switch)
+    * L'indication que ce réseau est conçu pour être un réseau "primaire" (il vient donc remplacer le Pod Network)
+    * L'utilisation de l'IMPAM, qui garantit que les adresses IP des VMs seront persistantes
+---
+
+[[vm-create]]
+== Création de VMs sur l'UDN
+
+Créons maintenant deux VMs, `vm-web` et `vm-db`, et attachons-les à cet UDN. Nous leur ajoutons également des **labels** (`app=web` et `app=db`) que nous utiliserons plus tard pour les *Network Policies*.
+
+. Dans le menu de navigation de gauche, basculez vers la perspective *Virtualization*.
+. Cliquez sur *Virtualization* -> *VirtualMachines*.
+. Assurez-vous d'être dans le projet *udn-projet-X* et cliquez sur *Create → From Template*
++
+image::2025_spring/module-09-networking/44.png[link=self, window=blank, width=100%]
++
+. Cliquez sur la tuile *Fedora VM* et attribuez le nom *Name:* `vm-web`.
++
+image::2025_spring/module-09-networking/45.png[link=self, window=blank, width=100%]
++
+. Et créez la *Machine Virtuelle*
+
+. Répétez ce processus pour une seconde VM nommée `vm-db`, et cliquez sur *Create → From Template*
+
+. Cliquez sur *User Template*, puis la tuile *centos-stream9-server-db-small* et attribuez le nom *Name:* `vm-db`.
++
+image::2025_spring/module-09-networking/50.png[link=self, window=blank, width=100%]
++
+
+
+== Vérification de la Persistance d'IP (Live Migration)
+Nous avons désomait deux VMs dans notre namespace *udn-project-X*, `vm-web` et `vm-db`, que nous allons utilisez pour verifier la *persistance des IP* sur un UDN puis pour tester les *Network Policies*.
+Démarrons par la vérifions de la persistance des IP.
+
+. Dans la liste *Virtualization* -> *VirtualMachines*, localisez votre VM `vm-db`
+. Notez l'addresses IP affichée dans la partie Network de l'Overview. C'est une IP qui à été dédiée a cette machine par l'IPAM de notre UDN.
+
++
+image::2025_spring/module-09-networking/48.png[link=self, window=blank, width=100%]
++
+
+
+=== Lancer la Migration à Chaud
+
+. Cliquez sur le menu action en haut à droite et sélectionnez *Migration* -> *Compute*.
++
+image::2025_spring/module-09-networking/49.png[link=self, window=blank, width=50%]
++
+. Observez le statut de la VM. Il passera à *Migrating*, puis reviendra à *Running*. Cela peut prendre une minute.
+
+=== Vérifier l'état post-migration
+
+. Une fois la VM revenue à l'état *Running*, vérifiez à nouveau l'addresse IP affichée dans la partie Network de l'Overview.
+. L'adresse IP de la VM n'a pas changé. C'est IP est lié à cette VM et ne chagera pas malgré les lives migrations ou les redémarrages.
++
+image::2025_spring/module-09-networking/48.png[link=self, window=blank, width=100%]
++
+
+Vous constaterez que l'adresse IP est **exactement la même**. L'UDN garantit la persistance de l'IP, ce qui est essentiel pour les services de base de données ou les applications qui dépendent d'IP stables.
+
+
+[[np-create]]
+== Micro-segmentation avec les NetworkPolicies
+
+Maintenant, sécurisons nos VMs. Notre objectif :
+. Bloquer *tout* le trafic entrant vers `vm-db` par défaut
+. Autoriser *uniquement* `vm-web` à se connecter à `vm-db` sur le port `3306` (MySQL).
+. Bloquer tous les autres flux (comme SSH ou ICMP/ping) depuis `vm-web`
+
+Nous faisons cela en utilisant des ressources **`NetworkPolicy`** standard de Kubernetes
+
+[IMPORTANT]
+====
+Il est crucial de comprendre que les **Network Policies ne sont pas spécifiques aux UDN**.
+
+Ce sont des ressources Kubernetes standard qui peuvent être utilisées pour contrôler les flux sur n'importe quel réseau géré par OpenShift, y compris :
+
+.   Le SDN OpenShift par défaut (le Pod Network).
+.   Les bridges OVS créés par une `NodeNetworkConfigurationPolicy` (NNCP)
+.   Et, bien sûr, les UDN que nous nous apprêtons à créer.
+====
+
+
+
+. Dans le menu de gauche, cliquez sur *Networking* -> *NetworkPolicies*
+. Assurez-vous d'être dans le bon projet (udn-project-X)
+. Cliquez sur *Create Network Policy*, puis *YAML View*
+
+. **Politique 1 : Deny All**
++
+Créez une politique qui sélectionne `vm-db` et refuse tout le trafic entrant (ingress).
++
+[source,yaml]
+----
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-deny-all
+spec:
+  podSelector: <1>
+    matchLabels:
+      vm.kubevirt.io/name: vm-db
+  policyTypes:
+    - Ingress
+  ingress: [] <2>
+----
+<1> `podSelector` fonctionne car la VM est gérée par un pod `virt-launcher` qui porte nos **labels**.
+<2> Une liste `ingress` vide signifie "ne rien autoriser".
++
+. **Politique 2 : Autoriser le flux Web vers BDD**
++
+Créez une seconde politique qui autorise le trafic depuis `vm-web` vers `vm-db` *uniquement* sur le port TCP 3306.
++
+[source,yaml]
+----
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-to-db
+spec:
+  podSelector:
+    matchLabels:
+      vm.kubevirt.io/name: vm-db <1>
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              vm.kubevirt.io/name: vm-web <2>
+      ports:
+        - protocol: TCP
+          port: 3306 <3>
+----
+<1> Cette politique s'applique à `vm-db`.
+<2> Elle autorise le trafic *provenant* de `vm-web`.
+<3> Elle autorise le trafic *uniquement* sur le port TCP 3306.
+
+== Vérification des Flux Réseau
+
+Testons nos règles. Nous allons nous connecter à `vm-web` et essayer d'atteindre `vm-db` (ex: `192.168.200.12`).
+
+. Ouvrez la console de `vm-web`.
+. **Test 1 : Flux non autorisé (ex: PING ou SSH)**
++
+Essayez de pinger `vm-db`.
++
+[source,sh]
+----
+$ ping 192.168.200.12
+PING 192.168.200.12 (192.168.200.12) 56(84) bytes of data.
+...
+--- 192.168.200.12 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3068ms
+----
++
+*Résultat :* Échec. Le trafic ICMP n'est pas autorisé par notre politique. Tenter un `ssh user@192.168.200.12` échouerait également.
+
+. **Test 2 : Flux autorisé (TCP/3306)**
++
+Utilisons un outil comme `telnet` ou `nc` (netcat) pour tester le port 3306.
++
+[source,sh]
+----
+$ nc -v -z -w 3 192.168.200.12 3306
+Connection to 192.168.200.12 3306 port [tcp/mysql] succeeded!
+----
++
+*Résultat :* Succès. La connexion est établie car elle correspond parfaitement à notre **`NetworkPolicy`** `allow-web-to-db`.
+
+Vous avez maintenant mis en place une micro-segmentation granulaire entre vos VMs, en plus de leur fournir des adresses IP persistantes gérées par le cluster, le tout grâce aux UDN.
+
+[[cleanup]]
+== Cleanup
+
+Pour économiser des ressources pour le prochain *lab*, veuillez arrêter toutes les VMs que vous avez créées dans ce module.
+
+. Naviguez vers la *persona* *Virtualization* dans le menu de gauche, puis cliquez sur *Virtual Machines*.
+. Si des VMs affichent le statut *Running*, mettez en surbrillance la VM dans la colonne centrale arborescente, et sélectionnez le bouton *Stop* ou l'option dans le menu *dropdown* *Actions*.
+
+Toutes les VMs devraient maintenant être à l'état *Stopped*.

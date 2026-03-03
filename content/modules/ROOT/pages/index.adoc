@@ -1,0 +1,36 @@
+= Les VM passent en mode cloud-native avec OpenShift Virtualization
+
+== Introduction
+
+Bienvenue à l'atelier *OpenShift Virtualization* du *Connect Tech Day Red Hat* ! 
+
+Durant cet atelier, nous explorerons en profondeur les capacités de personnalisation avancées des VM sur la plateforme OpenShift. 
+
+L'objectif est de dépasser les déploiements standards pour intégrer pleinement vos VM dans un environnement d'entreprise complexes.
+
+.Nous verrons notamment comment :
+* Créer des templates personnalisés pour standardiser et accélérer le déploiement de vos VM.
+* Connecter nos machines virtuelles à notre réseau d'entreprise.
+* Mettre en place une bulle réseau UDN pour la communication de vos VMs.
+* Créer une stratégie robuste de sauvegarde et de restauration pour vos machines virtuelles en intégrant la solution Veeam Kasten.
+
+== Accès au Cluster
+
+Votre environnement d'atelier se trouve sur un cluster partagé.
+Les autres participants à cet atelier se trouvent également sur ce cluster, vous avez donc un accès limité aux coulisses d'OpenShift.
+Lorsque des fonctionnalités importantes d'OpenShift ne sont pas visibles pour les utilisateurs, ce guide vous fournira des explications et des captures d'écran des parties concernées.
+Ce contrôle d'accès strict des utilisateurs met en évidence la puissante multi-tenancy d'OpenShift.
+De nombreux projets peuvent être exploités sur un seul cluster OpenShift sans interférer les uns avec les autres.
+
+Vous réaliserez l'intégralité de cet atelier via la console OpenShift.
+
+. *Ouvrez la Console OpenShift*. Le lien vers la Console vous à été transmit par email
+
+. *Cliquez sur htpasswd_provider*
+
+image::module-1-console-login.png[link=self, window=blank, width=100%]
+
+*Entrez votre nom d'utilisateur et le mot de passe qui vous a été transmis par email*
+
+Félicitations !
+Vous êtes désormais connecté et prêt à commencer l'atelier !

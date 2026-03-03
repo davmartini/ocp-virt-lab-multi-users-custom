@@ -1,0 +1,184 @@
+= Gestion des VM sur OpenShift Virtualization
+
+Dans cette première partie, nous allons prendre en main la plateforme en créant une VM Linux et en effectuant nos premières actions d'administration.
+
+== Passer en vue Virtualization 
+
+. Lors de votre première connexion, vous serez placé dans la vue *Administrator* avec une fenêtre d'introduction. Cliquez sur le bouton *Skip tour* pour fermer la fenêtre.
++
+image::2025_spring/module-01-intro/00_Dev_Perspective.png[link=self, window=blank, width=60%]
+
+. Maintenant, cliquez sur *Administrator* dans le coin supérieur gauche et passez à la vue *Virtualization*.
++
+image::2025_spring/module-01-intro/01_Virt_Perspective.png[link=self, window=blank, width=60%]
+
+[[create_project]]
+== Séléctionner un nouveau Project 
+
+. Avant de créer une VM, nous devons séléctionner un *project*. Les machines virtuelles sont déployées dans un *project* spécifique où, par défaut, les utilisateurs sans permission sur le *projet* ne peuvent pas y accéder, les gérer ou les contrôler. Les administrateurs peuvent accéder à tous les *projects*, et donc voir toutes les machines virtuelles, cependant les utilisateurs réguliers doivent recevoir l'accès aux *projects* selon leurs besoins.
++
+. Cliquez sur *Show only projects with VirtualMachines* en haut à droite de la console.
++
+image::2025_spring/module-01-intro/10_Column_Create.png[link=self, window=blank, width=100%]
+
+. Dans le champ *Projects*, Séléctionnez *projet-X*, en remplaçant le X avec votre numéro d'utilisateur. Ce projet vous est dédié durant le Lab.
++
+image::2025_spring/module-01-intro/11_Create_Project.png[link=self, window=blank, width=50%]
+
+[[create_vm]]
+== Créer une VM Linux
+
+. Depuis la colonne d'aperçu des machines virtuelles, cliquez sur le bouton *Create VirtualMachine* et sélectionnez *From template* dans le menu déroulant.
++
+NOTE: Les VMs peuvent aussi être créées depuis un assistant *InstanceType* ou en saisissant une définition *YAML* personnalisée, mais pour ce scénario de *lab* actuel, nous allons nous en tenir à la création de VMs basées sur des *templates* existants.
++
+image::2025_spring/module-01-intro/12_Create_VM_Button.png[link=self, window=blank, width=100%]
+
+. Vous serez redirigé vers l'écran *Catalog*, où un certain nombre de tuiles apparaîtront, montrant les *templates* de VM prédéfinis disponibles.
++
+En examinant la liste des *templates* disponibles, vous remarquerez que certains ont un badge bleu qui indique _Source available_. Ce sont des *templates* qui utilisent des images sources fournies par Red Hat
++
+En deployant votre propre cluster environnement, vous pourrez personnaliser les options disponibles, vous pouvez choisir de modifier la disponibilité de ces sources de *boot* par défaut, et/ou supprimer ces disques sources, en faveur de la création de disques personnalisés pour les besoins de votre organisation.
++
+image::2025_spring/module-01-intro/13_Create_VM_Templates.png[link=self, window=blank, width=100%]
+
+. Sélectionnez la tuile *Fedora VM*.
++
+image::2025_spring/module-01-intro/14_Create_VM_Quick.png[link=self, window=blank, width=100%]
+
+. Changez le nom en *fedora01* et appuyez sur *Quick create VirtualMachine*.
++
+image::2025_spring/module-01-intro/15_Create_VM_Quick_Name.png[link=self, window=blank, width=100%]
+
+. Nous retournerons à notre vue en arborescence et il est possible de voir les informations sur notre nouvelle VM dans la colonne d'aperçu des machines virtuelles. Remarquez aussi que nous voyons maintenant notre *project* *project-X* listé dans la colonne de droite car il contient désormais une VM.
++
+Si nous regardons attentivement, nous pouvons voir le statut de la VM passer de *Provisioning* à *Starting* et finalement *Running* quand elle est prête.
++
+Pendant ce temps, le *storage provider* a cloné le disque du *template* pour qu'il puisse être utilisé par la machine virtuelle nouvellement créée. Le temps que cela prend peut varier en fonction du *storage provider* utilisé pour créer le disque de *boot*, et de la charge actuelle sur le système.
++
+image::2025_spring/module-01-intro/16_Fedora_Running.png[link=self, window=blank, width=100%]
+
+. Une fois la machine virtuelle passé en status *running*, nous pouvons explorer davantage la page *Overview*.
++
+* *Details* : Cette tuile nous montre des informations sur notre VM, y compris son nom, son statut, l'heure de création, l'OS, les ressources virtuelles, et le *template* à partir duquel elle a été créée. Elle contient aussi un terminal *VNC* miniature, et la possibilité de lancer une console web en plein écran.
+* *General* : Cette tuile nous montre des informations spécifiques à OpenShift, y compris le *Namespace* (*Project*), le nom de l'instance, et le *pod* Kubernetes où le *guest OS* s'exécute.
+* *Snapshots* : Cette tuile nous donne des informations sur les *snapshots* existants, et dispose aussi du bouton pour créer rapidement un *snapshot*.
+* *Network* : Cette tuile nous donne l'adresse IP de la machine virtuelle sur le *software-defined network (SDN)* et son *hostname* interne. Si aucun réseau supplémentaire n'est défini, les VMs sont automatiquement attachées au *pod network*. Plus tard dans ce *lab*, nous explorerons les options de réseau avancées, et comment personnaliser la connectivité pour les VMs.
+* *Utilization* : Cette tuile nous donne un aperçu des ressources actuellement utilisées par cette machine virtuelle, y compris le CPU, la Mémoire, le Stockage, et le débit Réseau.
++
+image::2025_spring/module-01-intro/17_Fedora_Details.png[link=self, window=blank, width=100%]
+
+. Après avoir fini de regarder les détails de la VM, cliquez sur l'onglet *Events* pour voir quelques détails sur le processus de *provisioning* qui vient d'avoir lieu. S'il y a des problèmes avec la création de la VM, ils apparaîtront aussi dans cet onglet. Les événements suivants ont eu lieu pendant la création :
++
+image::2025_spring/module-01-intro/18_Fedora_Events.png[link=self, window=blank, width=100%]
++
+* Un _DataVolume_ a été créé. Les _DataVolumes_ sont utilisés pour gérer la création d'un disque de VM, abstrayant le processus de clone ou d'importation sur le stockage natif OpenShift pendant le workflow de création de la machine virtuelle.
+* Un autre event nous indique que la VM_ Fedora01 a été démarrée.
+
+[[admin_vms]]
+== Administration des VMs
+
+Administrer et utiliser des machines virtuelles, c'est plus que simplement créer et personnaliser leur configuration. En tant qu'administrateur de la plateforme, nous devons aussi être capables de contrôler les états de la VM et de déclencher des *live migrations* (migrations à chaud) afin de pouvoir équilibrer les ressources, effectuer des tâches de maintenance, et reconfigurer les *nodes* de notre cluster.
+
+. Cliquez sur l'onglet *Configuration*, c'est le point d'entrée pour modifier les ressources de la machine virtuelle.
++
+image::2025_spring/module-01-intro/19_VM_Configuration.png[link=self, window=blank, width=100%]
++
+Il inclut sept sous-onglets :
++
+image::2025_spring/module-01-intro/20_Configuration_Tab.png[link=self, window=blank, width=100%]
++
+* *Details* : Cet onglet présente toutes les caractéristiques physiques de la VM dans un seul panneau. D'ici, vous pouvez éditer divers descripteurs et configurations matérielles de base, y compris modifier le *cpu* ou la *mémoire*, changer le *hostname*, attacher des périphériques en *passthrough*, et modifier l'ordre de *boot*.
+* *Storage* : Cet onglet liste les disques attachés au système et vous permet d'ajouter de nouveaux disques au système. Si le *guest OS* est configuré avec l'agent qemu utilisé sur OpenShift Virtualization, il liste également les *filesystems*. Ici, il est possible d'attacher des _ConfigMaps_, des _Secrets_, et des _Service Accounts_ comme disques supplémentaires. C'est utile pour passer des données de configuration aux applications s'exécutant dans la machine virtuelle.
+* *Network* : Cet onglet montre les interfaces réseau actuelles configurées pour la VM et vous permet d'en ajouter de nouvelles.
+* *Scheduling* : Cet onglet inclut des options de configuration avancées indiquant où la VM devrait s'exécuter et la stratégie à suivre pour l'éviction. Cet onglet est utilisé pour configurer des règles d'*(anti)affinity*, configurer des *node selectors* et des *tolerations*, et d'autres comportements qui affectent sur quels *nodes* du cluster la VM peut être *scheduled*.
+* *SSH* : Cet onglet vous permet de configurer l'accès à distance à la machine en créant un service SSH sur un *load-balancer* configuré, ou en injectant des clés SSH publiques si la fonctionnalité est activée.
+* *Initial run* : Cet onglet nous permet de configurer un _cloud-init_ pour Linux ou un _sys-prep_ pour les os Windows, y compris la définition des commandes à exécuter au premier *boot*, telles que l'injection de clés SSH, l'installation d'applications, la configuration réseau, et plus encore.
+* *Metadata* : Cet onglet montre les *Labels* et *Annotations* actuels appliqués à la machine virtuelle. Modifier ces valeurs peut nous aider à *tagger* nos machines pour des objectifs spécifiques, ou nous aider à activer des *workflows* automatisés en identifiant les machines de manière unique.
+
+. Vous pouvez cliquer sur chacun de ces onglets pour les explorer à votre guise, mais pour finir cette partie du workshop, concentrons-nous spécifiquement sur le stockage et le réseau.
+
+. Listez les disques associés à la VM en cliquant sur l'onglet *Storage* :
++
+image::2025_spring/module-01-intro/21_Storage_Tab.png[link=self, window=blank, width=100%]
++
+Dans cet environnement, la *StorageClass* par défaut, qui définit la source et le type de stockage utilisé pour le disque, s'appelle *ocs-external-storagecluster-ceph-rbd*. Ce stockage est le type par défaut fourni par *OpenShift Data Foundation (ODF)* pour exécuter des machines virtuelles. Chaque *storage provider* a différentes *storage classes* qui définissent les caractéristiques du stockage soutenant le disque de la VM.
+
+. Examinez les interfaces réseau attachées à la VM en cliquant sur le sous-onglet *Network* :
++
+image::2025_spring/module-01-intro/22_Network_Tab.png[link=self, window=blank, width=100%]
++
+Quand une VM est créée, une interface sur le réseau *Pod Networking* de type *masquerade* est créée par défaut. Elle connecte la VM au *SDN* et fournit un accès depuis la VM vers l'extérieur du cluster *OpenShift*. D'autres VMs, et *Pods*, dans le cluster peuvent accéder à la machine virtuelle en utilisant cette interface.
++
+De plus, une VM connectée au *SDN* peut être accédée de l'extérieur en utilisant une *Route*, ou un *Service* de type *load balancer*, ou même avoir une *Network Attachment Definition* configurée pour permettre un accès direct aux réseaux externes, un concept que nous explorerons plus en détail plus tard.
+
+[[vm_state]]
+== Contrôler l'État d'une VM
+
+En tant qu'utilisateur avec les permissions pour nécessaire pour gérer votre projet OpenShift : vous pouvez arrêter (*stop*), démarrer (*start*), redémarrer (*restart*), mettre en pause (*pause*), et sortir de pause (*unpause*) les machines virtuelles depuis la console web.
+
+. Cliquez sur l'onglet *Overview* pour revenir à l'écran pricipale.
+
+. Dans le coin supérieur droit, vous remarquerez des boutons de raccourci pour l'état d'exécution : *stop*, *restart*, *pause*, et *start*. Ainsi qu'un menu déroulant intitulé *Actions*.
++
+image::2025_spring/module-01-intro/23_VM_State_Actions.png[link=self, window=blank, width=100%]
++
+* *Stop* : Lance un *graceful shutdown* de la Machine Virtuelle.
+* *Restart* : Envoie un signal au système d'exploitation pour *reboot* la Machine Virtuelle. Une interaction avec le *guest OS* est nécessaire pour que cela fonctionne correctement.
+* *Pause* : Le processus est gelé sans accès supplémentaire aux ressources CPU et I/O, mais la mémoire utilisée par la VM au niveau de l'*hyperviseur* restera allouée.
+* *Start* : Démarre une machine virtuelle arrêtée. Il sera grisé si la machine est déjà en cours d'exécution.
+
+. Bien que les boutons de raccourci soient pratiques, vous pouvez aussi accéder à ces options et à d'autres en cliquant sur le menu *Actions* et en regardant les options disponibles dans la liste déroulante.
++
+image::2025_spring/module-01-intro/24_VM_Actions_Menu.png[link=self, window=blank, width=100%]
+
+. Appuyez sur le bouton *Stop* et attendez que la Machine Virtuelle soit à l'état *Stopped*.
++
+image::2025_spring/module-01-intro/25_VM_Stopped.png[link=self, window=blank, width=100%]
+
+. En cliquant sur *Actions*, l'option *Start* apparaît, et les options *Restart* et *Pause* sont grisées.
++
+image::2025_spring/module-01-intro/26_VM_Actions_List_Stopped.png[link=self, window=blank, width=100%]
+
+. Cliquez sur *Start*, et attendez le statut *Running*.
+
+. En utilisant le menu *Actions*, ou le bouton de raccourci, appuyez sur l'option *Pause*. L'état de la Machine Virtuelle changera en *Paused*.
++
+image::2025_spring/module-01-intro/27_VM_Actions_Paused.png[link=self, window=blank, width=100%]
+
+. Sortez la Machine Virtuelle de pause en utilisant le menu *Actions* et l'option *Unpause*, ou en utilisant le bouton de raccourci.
+
+[[live_migrate]]
+== Effectuer une Live Migration
+
+Dans cette section, nous allons migrer la VM d'un *node* OpenShift à un autre sans arrêter la VM. La *Live migration* (migration à chaud) nécessite un stockage *ReadWriteMany* (RWX) pour que les disques de la VM puissent être montés à la fois sur les *nodes* source et de destination en même temps. *OpenShift Virtualization*, contrairement à d'autres solutions de virtualisation que vous connaissez peut-être, n'utilise pas de *datastores* monolithiques montés sur chaque membre du cluster qui contiennent de nombreux disques de VM pour de nombreuses VMs différentes. Au lieu de cela, chaque disque de VM est stocké dans son propre volume qui n'est monté que quand et où il est nécessaire.
+
+. Pour voir le *node* physique sur lequel la machine virtuelle s'exécute, cliquez sur le nom du *Pod* _virt-launcher-fedora01-uuid_ qui se trouve sous la tuile *General* sur la page *Overview*.
++
+image::2025_spring/module-01-intro/28_Pod_Name.png[link=self, window=blank, width=100%]
+
+. Cela ouvrira la page de détails du *Pod*. Cherchez l'en-tête de section appelé *Node* et regardez le nom du *worker* sur lequel le *pod* s'exécute. Dans cette capture d'écran, il s'exécute sur _worker-cluster-ttgmt-3_.
++
+image::2025_spring/module-01-intro/29_Pod_Details_Node.png[link=self, window=blank, width=100%]
+
+. Cliquez sur le bouton "précédent" de votre navigateur pour retourner à la page *Overview*.
+
+. En utilisant le menu *Actions*, sélectionnez l'option *Migration* -> *Compute*.
++
+image::2025_spring/module-01-intro/30_VM_Dialog_Migrate.png[link=self, window=blank, width=100%]
+
+. Après quelques secondes, la VM changera son statut en *Migrating* et vous pourrez suivre sa progression.
++
+image::2025_spring/module-01-intro/31_VM_Migrating.png[link=self, window=blank, width=100%]
+
+. Quand la migration sera terminée, la VM reviendra au statut *Running*, mais elle se trouvera sur un nouveau *node*. Cliquons sur le nom de notre *pod* _virt-launcher-fedora01-uuid_ pour vérifier.
++
+image::2025_spring/module-01-intro/32_Migrated_Status.png[link=self, window=blank, width=100%]
+
+. Nous pouvons maintenant voir que la machine virtuelle se trouve sur un nouveau *node*, dans l'image _worker-cluster-ttgmt-2_, et que le *pod* lui-même réside maintenant dans un nouveau *pod* avec un nouvel ID unique, car le processus de *live migration* transfère l'instance de VM vers un nouveau *pod* sur un nouveau *worker node* sans interruption.
++
+image::2025_spring/module-01-intro/33_Pod_Details_Node_Migrated.png[link=self, window=blank, width=100%]
+
+== Conclusion
+
+Dans cette partie du *lab*, nous avons fait un tour d'horizon de l'environnement de gestion *Virtualization* dans *OpenShift Virtualization*, et effectué quelques tâches de gestion de base des machines virtuelles, y compris la gestion de l'état des VMs et la *live migration* entre les hôtes physiques. Ces deux tâches sont courantes et souvent nécessaires en tant qu'administrateurs de plateforme et constituent un excellent moyen de vous familiariser avec certaines fonctionnalités de base disponibles lorsque vous travaillez avec des VMs dans *OpenShift Virtualization*.
