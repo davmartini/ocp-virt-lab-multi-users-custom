@@ -97,6 +97,7 @@ oc adm policy add-role-to-user admin user$i -n project-$i
 oc adm policy add-role-to-user admin user$i -n udn-projet-$i
 oc adm policy add-role-to-user admin user$i -n openshift
 oc adm policy add-role-to-user kubevirt.io:dm user$i -n project-$i
+oc adm policy add-role-to-user kubevirt.io:dm user$i -n udn-projet-$i
 oc adm policy add-role-to-user edit user$i -n openshift-migration
 done
 ----
