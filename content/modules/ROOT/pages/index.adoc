@@ -18,7 +18,7 @@ Les environnements pour ces labs sont des environnements générés à la demand
 
 == Document
 
-Vous trouverez sur ce attachments$test.pdf[TEST] , le document présenté en début de session.
+Vous trouverez sur ce link:{attachmentsdir}/test.pdf[LIEN] , le document présenté en début de session.
 
 == Accès au Cluster
 
