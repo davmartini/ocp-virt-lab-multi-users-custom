@@ -4,9 +4,9 @@
 OpenShift intègre nativement (et sans surplus) une stack complète d'observabilité qui collecte les métriques mais qui peut également collecter les logs (infra, applicative et audit).
 Toute cette stack est composée de composants open source sur lesquel nous contribuons activement comme Prometheus, Thanos, AlertManager, etc...
 
-OpenShift Observability est multi-tenancy par defaut et propose différents dashboards en fonction de votre rôle et des vos droits. 
+OpenShift Observability est multi-tenancy par defaut et propose différents dashboards en fonction de votre rôle et de vos droits. 
 
-Un *cluster admin* pourra par exemple voir plusieurs dizaine de dashboards afin d'avoir une visilité complète du cluster, d'un project en particulier ou d'une application bien précise. 
+Un *cluster admin* pourra par exemple voir plusieurs dizaines de dashboards afin d'avoir une visibilité complète du cluster, d'un project en particulier ou d'une application bien précise. 
 
 Un *utilisateur OpenShift* lui ne pourra qu'accéder à quelques métriques et dashboards liés aux projects dont il a accès.
 

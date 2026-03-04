@@ -11,7 +11,7 @@ En tirant parti de *Red Hat OpenShift*, vous bénéficiez d'une plateforme puiss
 
 * Lorsqu'elle est déployée sur OpenShift, OpenShift Virtualization combine le meilleur des deux mondes : l'innovation cloud-native et la flexibilité d'exécuter des VM traditionnelles, sur une plateforme unifiée et cloud-native.
 
-* Cette technologie jette des bases solides pour exécuter les charges de travail traditionnelles de manière sécurisée et fiable, tout en vous dotant des outils et des compétences nécessaires pour créer des applications modernes sur une plateforme unifiée.
+* Cette technologie assure des bases solides pour exécuter les charges de travail traditionnelles de manière sécurisée et fiable, tout en vous dotant des outils et des compétences nécessaires pour créer des applications modernes sur une plateforme unifiée.
 
 [[additional_info]]
 == Informations Complémentaires
