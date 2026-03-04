@@ -1,13 +1,13 @@
 ---
 name: modules
-title: Experience OpenShift Virtualization
+title: Atelier pratique Red Hat OpenShift Virtualization - 10/03/2026
 version: master
 nav:
 - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
-    lab_name: Experience OpenShift Virtualization
+    lab_name: Atelier pratique Red Hat OpenShift Virtualization - 10/03/2026
     release-version: master
     page-pagination: true
   page-links:
