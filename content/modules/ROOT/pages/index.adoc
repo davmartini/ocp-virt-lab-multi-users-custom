@@ -18,7 +18,7 @@ Les environnements pour ces labs sont des environnements générés à la demand
 
 == Document
 
-Vous trouverez sur ce attachment$workshop_tech_journey_virtualization.pdf[LIEN, window=_blank] , le document présenté en début de session.
+Vous trouverez sur ce attachment$test.pdf[TEST] , le document présenté en début de session.
 
 == Accès au Cluster
 
