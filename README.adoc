@@ -113,7 +113,8 @@ done
 
 
 ----
-for i in 
+for i in {1..5}
+do
 oc apply -f - <<EOF
 kind: Deployment
 apiVersion: apps/v1
@@ -186,9 +187,9 @@ spec:
             failureThreshold: 3
           env:
             - name: GIT_REPO_URL
-              value: 'https://github.com/rhpds/openshift-virt-roadshow-cnv-multi-user'
+              value: 'https://github.com/davmartini/ocp-virt-lab-multi-users-custom'
             - name: GIT_REPO_REF
-              value: v1.0.1
+              value: main
             - name: ANTORA_PLAYBOOK
               value: default-site.yml
           ports:
@@ -260,6 +261,7 @@ spec:
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 EOF
+done
 ----
 
 
