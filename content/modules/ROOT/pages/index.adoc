@@ -18,7 +18,7 @@ Les environnements pour ces labs sont des environnements générés à la demand
 
 == Document
 
-Vous trouverez sur ce link:10th_march_virtualization_handson_workshop_tech_journey_virtualization.pdf[LIEN], le document présenté en début de session.
+Vous trouverez sur ce attachment$10th_march_virtualization_handson_workshop_tech_journey_virtualization.pdf[LIEN], le document présenté en début de session.
 
 == Accès au Cluster
 
