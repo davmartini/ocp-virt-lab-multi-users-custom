@@ -31,6 +31,7 @@ In this event we will explore many common management activities that virtual adm
 == Create new role
 
 ----
+oc apply -f - <<EOF
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -68,6 +69,7 @@ rules:
       - kubevirt.io
     resources:
       - virtualmachineinstancemigrations
+EOF
 ----
 
 
@@ -97,6 +99,167 @@ oc adm policy add-role-to-user admin user$i -n openshift
 oc adm policy add-role-to-user kubevirt.io:dm user$i -n project-$i
 oc adm policy add-role-to-user edit user$i -n openshift-migration
 done
+----
+
+
+== Delete old deployment and recreate the new one
+
+----
+for i in {1..20}
+do
+oc delete deployment showroom -n showroom-user$i
+done
+----
+
+
+----
+for i in 
+oc apply -f - <<EOF
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: showroom
+  namespace: showroom-user$i
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: showroom
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: showroom
+    spec:
+      restartPolicy: Always
+      serviceAccountName: showroom
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: nginx
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+          ports:
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: content
+              mountPath: /data/www
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+            - name: nginx-pid
+              mountPath: /var/run
+          terminationMessagePolicy: File
+          image: 'quay.io/rhpds/nginx:1.25'
+        - resources: {}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: content
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: GIT_REPO_URL
+              value: 'https://github.com/rhpds/openshift-virt-roadshow-cnv-multi-user'
+            - name: GIT_REPO_REF
+              value: v1.0.1
+            - name: ANTORA_PLAYBOOK
+              value: default-site.yml
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: user-data
+              mountPath: /user_data/
+            - name: showroom
+              mountPath: /showroom/
+          terminationMessagePolicy: File
+          image: 'ghcr.io/rhpds/showroom-content:prod'
+        - resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          name: terminal
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: GUID
+              value: 26ljc
+          ports:
+            - containerPort: 7681
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: terminal-lab-user-home
+              mountPath: /home/lab-user
+          terminationMessagePolicy: File
+          image: 'quay.io/rhpds/openshift-showroom-terminal-ocp:latest'
+      serviceAccount: showroom
+      volumes:
+        - name: showroom
+          emptyDir: {}
+        - name: user-data
+          configMap:
+            name: showroom-userdata
+            defaultMode: 420
+        - name: content
+          configMap:
+            name: showroom-index
+            defaultMode: 420
+        - name: nginx-config
+          configMap:
+            name: showroom-proxy-config
+            defaultMode: 420
+        - name: nginx-pid
+          emptyDir: {}
+        - name: nginx-cache
+          emptyDir: {}
+        - name: terminal-lab-user-home
+          persistentVolumeClaim:
+            claimName: showroom-terminal-lab-user-home
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+EOF
 ----
 
 

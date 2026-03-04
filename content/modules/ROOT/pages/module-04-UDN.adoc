@@ -35,7 +35,7 @@ image::2025_spring/module-09-networking/udn02.png[link=self, window=blank, width
 +
 image::2025_spring/module-09-networking/udn03.png[link=self, window=blank, width=70%]
 +
-. Examinon maintenant notre UDN
+. Examinons maintenant notre UDN
 +
 image::2025_spring/module-09-networking/udn04.png[link=self, window=blank, width=80%]
 +
@@ -74,11 +74,11 @@ image::2025_spring/module-09-networking/50.png[link=self, window=blank, width=10
 
 
 == Vérification de la Persistance d'IP (Live Migration)
-Nous avons désomait deux VMs dans notre namespace *udn-project-X*, `vm-web` et `vm-db`, que nous allons utilisez pour verifier la *persistance des IP* sur un UDN puis pour tester les *Network Policies*.
-Démarrons par la vérifions de la persistance des IP.
+Nous avons désormais deux VMs dans notre namespace *udn-project-X*, `vm-web` et `vm-db`, que nous allons utiliser pour vérifier la *persistance des IP* sur un UDN puis pour tester les *Network Policies*.
+Démarrons par la vérification de la persistance des IP.
 
 . Dans la liste *Virtualization* -> *VirtualMachines*, localisez votre VM `vm-db`
-. Notez l'addresses IP affichée dans la partie Network de l'Overview. C'est une IP qui à été dédiée a cette machine par l'IPAM de notre UDN.
+. Notez l'adresse IP affichée dans la partie Network de l'Overview. C'est une IP qui a été dédiée à cette machine par l'IPAM de notre UDN.
 
 +
 image::2025_spring/module-09-networking/48.png[link=self, window=blank, width=100%]
@@ -95,8 +95,8 @@ image::2025_spring/module-09-networking/49.png[link=self, window=blank, width=50
 
 === Vérifier l'état post-migration
 
-. Une fois la VM revenue à l'état *Running*, vérifiez à nouveau l'addresse IP affichée dans la partie Network de l'Overview.
-. L'adresse IP de la VM n'a pas changé. C'est IP est lié à cette VM et ne chagera pas malgré les lives migrations ou les redémarrages.
+. Une fois la VM revenue à l'état *Running*, vérifiez à nouveau l'adresse IP affichée dans la partie Network de l'Overview.
+. L'adresse IP de la VM n'a pas changée. Cette IP est liée à cette VM et ne changera pas malgré les lives migrations ou les redémarrages.
 +
 image::2025_spring/module-09-networking/48.png[link=self, window=blank, width=100%]
 +

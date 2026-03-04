@@ -15,7 +15,7 @@ image::2025_spring/module-01-intro/01_Virt_Perspective.png[link=self, window=bla
 [[create_project]]
 == Séléctionner un nouveau Project 
 
-. Avant de créer une VM, nous devons séléctionner un *project*. Les machines virtuelles sont déployées dans un *project* spécifique où, par défaut, les utilisateurs sans permission sur le *projet* ne peuvent pas y accéder, les gérer ou les contrôler. Les administrateurs peuvent accéder à tous les *projects*, et donc voir toutes les machines virtuelles, cependant les utilisateurs réguliers doivent recevoir l'accès aux *projects* selon leurs besoins.
+. Avant de créer une VM, nous devons sélectionner un *project*. Les machines virtuelles sont déployées dans un *project* spécifique où, par défaut, les utilisateurs sans permission sur le *projet* ne peuvent pas y accéder, les gérer ou les contrôler. Les administrateurs peuvent accéder à tous les *projects*, et donc voir toutes les machines virtuelles, cependant les utilisateurs réguliers doivent recevoir l'accès aux *projects* selon leurs besoins.
 +
 . Cliquez sur *Show only projects with VirtualMachines* en haut à droite de la console.
 +
@@ -38,7 +38,7 @@ image::2025_spring/module-01-intro/12_Create_VM_Button.png[link=self, window=bla
 +
 En examinant la liste des *templates* disponibles, vous remarquerez que certains ont un badge bleu qui indique _Source available_. Ce sont des *templates* qui utilisent des images sources fournies par Red Hat
 +
-En deployant votre propre cluster environnement, vous pourrez personnaliser les options disponibles, vous pouvez choisir de modifier la disponibilité de ces sources de *boot* par défaut, et/ou supprimer ces disques sources, en faveur de la création de disques personnalisés pour les besoins de votre organisation.
+En déployant votre propre cluster environnement, vous pourrez personnaliser les options disponibles, vous pouvez choisir de modifier la disponibilité de ces sources de *boot* par défaut, et/ou supprimer ces disques sources, en faveur de la création de disques personnalisés pour les besoins de votre organisation.
 +
 image::2025_spring/module-01-intro/13_Create_VM_Templates.png[link=self, window=blank, width=100%]
 
@@ -115,7 +115,7 @@ De plus, une VM connectée au *SDN* peut être accédée de l'extérieur en util
 [[vm_state]]
 == Contrôler l'État d'une VM
 
-En tant qu'utilisateur avec les permissions pour nécessaire pour gérer votre projet OpenShift : vous pouvez arrêter (*stop*), démarrer (*start*), redémarrer (*restart*), mettre en pause (*pause*), et sortir de pause (*unpause*) les machines virtuelles depuis la console web.
+En tant qu'utilisateur, vous avec les permissions nécessaires pour gérer votre projet OpenShift : vous pouvez arrêter (*stop*), démarrer (*start*), redémarrer (*restart*), mettre en pause (*pause*), et sortir de pause (*unpause*) les machines virtuelles depuis la console web.
 
 . Cliquez sur l'onglet *Overview* pour revenir à l'écran pricipale.
 
@@ -152,7 +152,7 @@ image::2025_spring/module-01-intro/27_VM_Actions_Paused.png[link=self, window=bl
 == Effectuer une VM Live Migration
 
 Dans cette section, nous allons migrer la VM d'un *node* OpenShift à un autre sans arrêter la VM. La *Live migration* (migration à chaud) nécessite un stockage *ReadWriteMany* (RWX) pour que les disques de la VM puissent être montés à la fois sur les *nodes* source et de destination en même temps. *OpenShift Virtualization*, contrairement à d'autres solutions de virtualisation que vous connaissez peut-être, n'utilise pas de *datastores* monolithiques montés sur chaque membre du cluster qui contiennent de nombreux disques de VM pour de nombreuses VMs différentes. Au lieu de cela, chaque disque de VM est stocké dans son propre volume qui n'est monté que quand et où il est nécessaire.
-Étant simple utilisateur OpenShift, vous ne verez pas simplement le noeud sous jacent hébergent votre VM. OpenShift étant une technologie cloud, l'infrastructure doit être transparente pour un utilisateur final. 
+Étant simple utilisateur OpenShift, vous ne verrez pas le noeud sous jacent hébergeant votre VM. OpenShift étant une technologie cloud, l'infrastructure doit être transparente pour un utilisateur final. 
 
 . Pour voir le *node* physique sur lequel la machine virtuelle s'exécute, cliquez sur le nom du *Pod* _virt-launcher-fedora01-uuid_ qui se trouve sous la tuile *General* sur la page *Overview*.
 +

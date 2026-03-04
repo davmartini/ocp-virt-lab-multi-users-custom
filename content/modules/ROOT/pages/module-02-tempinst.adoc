@@ -337,7 +337,7 @@ image::2025_spring/module-07-tempinst/32_Windows_Template_Running.png[link=self,
 [[instance_types]]
 == Introduction aux Instance Types
 
-Afin de simplifier le processus de déploiement des machines virtuelles, à partir d'OpenShift 4.14, le mécanisme de configuration par défaut a été modifié pour mettre l'accent sur l'utilisation des *Instance Types*. Un *instance type* est un objet réutilisable où vous pouvez définir des ressources et des caractéristiques à appliquer à une nouvelle VM. Vous pouvez définir des *instance types* personnalisés ou utiliser la variété incluse lors de l'installation d'OpenShift Virtualization lors du *provisioning* de votre propre VM. Cela ressemble beaucoup plus à ce que les utilisateurs expérimentent lors de l'utilisation d'un catalogue en *self-service* chez les *cloud providers*.
+Afin de simplifier le processus de déploiement des machines virtuelles, à partir d'OpenShift 4.14, le mécanisme de configuration par défaut a été modifié pour mettre l'accent sur l'utilisation des *Instance Types*. Un *instance type* est un objet réutilisable où vous pouvez définir des ressources et des caractéristiques à appliquer à une nouvelle VM. Vous pouvez définir des *instance types* personnalisées ou utiliser la variété incluse lors de l'installation d'OpenShift Virtualization lors du *provisioning* de votre propre VM. Cela ressemble beaucoup plus à ce que les utilisateurs expérimentent lors de l'utilisation d'un catalogue en *self-service* chez les *cloud providers*.
 
 Cette section explore le *provisioning* d'une VM à l'aide d'un *instance type*.
 

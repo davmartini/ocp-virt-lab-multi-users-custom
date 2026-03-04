@@ -179,7 +179,7 @@ Confirmons que notre VM dispose des deux connexions réseau.
 +
 image::2025_spring/module-09-networking/28.png[link=self, window=blank, width=100%]
 +
-. Maintenant nous allons effectuer un clique droit sur la machine `fedora-bridged-1`et cliquer sur clone.
+. Maintenant nous allons effectuer un clic droit sur la machine `fedora-bridged-1`et cliquer sur clone.
 +
 image::2025_spring/module-09-networking/29.png[link=self, window=blank, width=35%]
 +
@@ -253,7 +253,7 @@ image::2025_spring/module-09-networking/38.png[link=self, window=blank, width=10
 
 === Vérifier l'état post-migration
 
-. Une fois la VM revenue à l'état *Running*, vérifiez à nouveau les addresses IP affichée dans la partie Network de l'Overview.
+. Une fois la VM revenue à l'état *Running*, vérifiez à nouveau les adresses IP affichées dans la partie Network de l'Overview.
 . Constatez que l'adresse IP du pod network a changé. C'est la nouvelle IP du Pod Network sur le nouveau nœud.
 . IP attribuée pour le réseau externe, elle, n'a pas changé.
 +
